@@ -25,9 +25,12 @@ npm start
 # Projeto Desafio Técnico Luizalabs
 ## Primeira etapa do desafio
 
-- API para responder à requisição de consulta de CEP para preenchimento automático de endereço no front
-- Se CEP válido: resposta com o endereço correspondente
-- Se CEP válido mas com endereço inexistente: substituição dos dígitos da direita para esquerda         
-    - (Os 3 dígitos da direita são os identificadores de distribuição dos correios)
-- Se CEP inválido: retorno JSON da mensagem: "CEP inválido"
+1.0) API para responder à requisição de consulta de CEP para preenchimento automático de endereço no front
+    1.1) Se CEP válido: resposta com o endereço correspondente
+    1.2) Se CEP válido mas com endereço inexistente: substituição dos dígitos da direita para esquerda         
+        1.2.1) (Os 3 dígitos da direita são os identificadores de distribuição dos correios)
+    1.3 Se CEP inválido: retorno JSON da mensagem: "CEP inválido"
 
+# Orientações para teste do item 1.2.1
+
+- Utilizar um CEP com os 5 primeiros dígitos em 14412, por exemplo: 14412999

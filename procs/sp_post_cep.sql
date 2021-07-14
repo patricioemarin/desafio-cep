@@ -39,12 +39,12 @@ begin
   	
   if (_erro_tran = 1) then
      rollback; 
-     set _msg_id   = 99;
+     set _msg_id   = 500;
 	  set _msg_txt  = 'Erro interno de banco de dados';
   else
      commit; 
-     set _msg_id   = 0;
-     set _msg_txt  = 'Sucesso';       
+     set _msg_id   = 200;
+     set _msg_txt  = 'Endereço salvo com sucesso';
   end if; 
   
   -- retorna para aplicacao
