@@ -1,0 +1,28 @@
+{
+  "name": "api-rest-cep",
+  "version": "1.0.0",
+  "description": "Projeto Desafio Técnico CEP: API em Node JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patricioemarin/desafio-cep.git"
+  },
+  "keywords": [
+    "node",
+    "cep",
+    "desafio",
+    "tecnico"
+  ],
+  "author": "Patricio Emilio Marin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patricioemarin/desafio-cep/issues"
+  },
+  "homepage": "https://github.com/patricioemarin/desafio-cep#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
