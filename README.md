@@ -7,11 +7,16 @@ Projeto Desafio Técnico CEP: API em Node JS
 - express
 - nodemon
 - morgan
+- MySQL
 - npm
 
 # Instalação
 
 npm install
+
+# Conexão MySQL
+
+Ajustar os parâmetros de conexão para as variáveis de ambiente no arquivo nodemon.js
 
 # Para rodar a aplicação
 

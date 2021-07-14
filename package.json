@@ -25,7 +25,8 @@
   "homepage": "https://github.com/patricioemarin/desafio-cep#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
