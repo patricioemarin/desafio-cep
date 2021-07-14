@@ -5,11 +5,17 @@ Projeto Desafio Técnico CEP: API em Node JS
 
 - node js (version 14.15.4)
 - express
+- nodemon
+- morgan
 - npm
 
 # Instalação
 
 npm install
+
+# Para rodar a aplicação
+
+npm start
 
 # Projeto Desafio Técnico Luizalabs
 ## Primeira etapa do desafio
