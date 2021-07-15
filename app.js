@@ -2,6 +2,11 @@ const cnsExpress = require('express');
 const cnsApp = cnsExpress();
 const cnsMorgan = require('morgan');
 const cnsRotasCEP = require('./routes/cep');
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+
+// Acesso à documentação Swagger
+cnsApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Moninotamento (via terminal) das requisições para acompanhamento no desenvolvimento
 cnsApp.use(cnsMorgan('dev'));

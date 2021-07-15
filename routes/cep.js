@@ -18,7 +18,7 @@ cnsRouter.post('/', (request, response, next) => {
                 // Liberação da conexão com o banco de dados para não estourar o limite
                 connection.release();
                 if (error) { return response.status(500).send({error: error})}
-                return response.status(201).send({response: result[0]});
+                return response.status(200).send({response: result[0]});
             }
         )
     });
@@ -55,6 +55,7 @@ cnsRouter.delete('/', (request, response, next) => {
                 // Liberação da conexão com o banco de dados para não estourar o limite
                 connection.release();
                 if (error) { return response.status(500).send({error: error})}
+                // Boa prática de informar os parâmetros de inclusão no processo de exclusão
                 const cnsResponse = {
                     mensagem: result[0],
                     request: {
@@ -71,7 +72,7 @@ cnsRouter.delete('/', (request, response, next) => {
                         }
                     }
                 }
-                return response.status(202).send({response: cnsResponse});
+                return response.status(200).send({response: cnsResponse});
             }
         )
     });

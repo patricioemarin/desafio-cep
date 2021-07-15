@@ -1,0 +1,157 @@
+{
+    "swagger": "2.0",
+        "info": 
+        {
+            "title": "API-Rest-CEP",
+            "description": "Projeto Desafio Técnico CEP: API em Node JS",
+            "version": "1.0"
+        },
+        "host": "localhost:3000",
+        "paths": 
+        {
+            "/cep ": 
+            {
+                "post": 
+                {
+                    "description": "Incluir/alterar endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                            "required": true
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "cep": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "uf": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "cidade": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "bairro": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "logradouro": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "complemento": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Endereço salvo com sucesso"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            },
+            "/cep/{cep}": 
+            {
+                "get": 
+                {
+                    "description": "Consultar endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                            "required": true
+                        },
+                        {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": 
+                        {
+                            "type": "object",
+                                "properties": 
+                                {
+                                    "id_cep": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Endereço (CEP) salvo com sucesso"
+                        },
+                        "404": 
+                        {
+                            "description": "Endereço (CEP) não localizado"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            },
+            "/cep": 
+            {
+                "delete": 
+                {
+                    "description": "Excluir endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                            "required": true
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "cep": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Endereço (CEP) salvo com sucesso"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            }
+        }
+}

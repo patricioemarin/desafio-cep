@@ -8,6 +8,8 @@ Projeto Desafio Técnico CEP: API em Node JS
 - nodemon
 - morgan
 - MySQL
+- jest
+- swagger-ui-express
 - npm
 
 # Instalação
