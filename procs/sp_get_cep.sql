@@ -33,9 +33,14 @@ begin
   -- Inicializa a variável
   set _intCont = 1;
   
-  -- Realiza 3 tentativas de localização do endereço pelo CEP
+  -- Realiza as tentativas de localização do endereço pelo CEP
   cep_loop: loop
     
+    -- Se atingiu a totalidade de zeros o CEP não será encontrado e sai do looping
+    if (_cepAux = "00000000") then
+      leave cep_loop;
+    end if;
+
     -- Se não encontrou o CEP, faz 3 tentativas de substituição do dígito à direita por zero
     if exists (select cepId from tbcep where cepId = _cepAux) then
       select  cepId,  cepUF,  cepCidade,  cepBairro,  cepLogradouro,  cepComplemento 

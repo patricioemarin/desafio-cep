@@ -9,16 +9,13 @@
         "host": "localhost:3000",
         "paths": 
         {
-            "/cep ": 
+            "/cep": 
             {
                 "post": 
                 {
                     "description": "Incluir/alterar endereço (CEP)",
                     "parameters": 
                     [
-                        {
-                            "required": true
-                        },
                         {
                             "in": "body",
                             "name": "body",
@@ -60,69 +57,19 @@
                     {
                         "200": 
                         {
-                            "description": "Endereço salvo com sucesso"
+                            "description": "Endereço (CEP) salvo com sucesso/Ok"
                         },
                         "500": 
                         {
-                            "description": "Erro interno do banco de dados"
+                            "description": "Erro interno do banco de dados/Internal Server Error"
                         }
                     }
-                }
-            },
-            "/cep/{cep}": 
-            {
-                "get": 
-                {
-                    "description": "Consultar endereço (CEP)",
-                    "parameters": 
-                    [
-                        {
-                            "required": true
-                        },
-                        {
-                        "in": "body",
-                        "name": "body",
-                        "required": true,
-                        "schema": 
-                        {
-                            "type": "object",
-                                "properties": 
-                                {
-                                    "id_cep": 
-                                    {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    ],
-                    "responses": 
-                    {
-                        "200": 
-                        {
-                            "description": "Endereço (CEP) salvo com sucesso"
-                        },
-                        "404": 
-                        {
-                            "description": "Endereço (CEP) não localizado"
-                        },
-                        "500": 
-                        {
-                            "description": "Erro interno do banco de dados"
-                        }
-                    }
-                }
-            },
-            "/cep": 
-            {
+                },
                 "delete": 
                 {
                     "description": "Excluir endereço (CEP)",
                     "parameters": 
                     [
-                        {
-                            "required": true
-                        },
                         {
                             "in": "body",
                             "name": "body",
@@ -144,14 +91,59 @@
                     {
                         "200": 
                         {
-                            "description": "Endereço (CEP) salvo com sucesso"
+                            "description": "Endereço (CEP) salvo com sucesso/Ok"
+                        },
+                        "404": 
+                        {
+                            "description": "CEP inválido/Unauthorized"
                         },
                         "500": 
                         {
-                            "description": "Erro interno do banco de dados"
+                            "description": "Erro interno do banco de dados/Internal Server Error"
+                        }
+                    }
+                }
+            },
+            "/cep/{id_cep}": 
+            {
+                "get": 
+                {
+                    "description": "Consultar endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                        "in": "path",
+                        "name": "id_cep",
+                        "required": true,
+                        "schema": 
+                        {
+                            "type": "object",
+                                "properties": 
+                                {
+                                    "id_cep": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Endereço (CEP) salvo com sucesso/Ok"
+                        },
+                        "404": 
+                        {
+                            "description": "CEP inválido/Unauthorized"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados/Internal Server Error"
                         }
                     }
                 }
             }
         }
-}
+    }

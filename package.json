@@ -2,10 +2,10 @@
   "name": "api-rest-cep",
   "version": "1.0.0",
   "description": "Projeto Desafio Técnico CEP: API em Node JS",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "test": "cross-env NODE_ENV=test jest",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/patricioemarin/desafio-cep#readme",
   "dependencies": {
+    "@types/jest": "^26.0.24",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
@@ -31,6 +34,7 @@
   },
   "devDependencies": {
     "jest": "^27.0.6",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.3"
   }
 }

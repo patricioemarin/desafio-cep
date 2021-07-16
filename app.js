@@ -5,6 +5,11 @@ const cnsRotasCEP = require('./routes/cep');
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 
+// Inclusão e tratamento de variáveis de ambiente utilizadas
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
+
 // Acesso à documentação Swagger
 cnsApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
