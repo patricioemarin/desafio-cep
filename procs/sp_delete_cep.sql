@@ -9,6 +9,7 @@ begin
   declare _encontrou smallint;
   declare _erro_tran smallint;
   declare _msg_id    int;
+  declare _msg_text  varchar(80);
 
   declare continue handler for not found set _encontrou = 1; 
     
@@ -25,18 +26,21 @@ begin
   
   if (_erro_tran = 1) then
     rollback; 
-    set _msg_id = 500;
+    set _msg_id     = 500;
+    set _msg_text   = "Erro interno do banco de dados";
   else
     if (_erro_tran = 2) then
-      set _msg_id = 404;
+      set _msg_id   = 404;
+      set _msg_text = "CEP não localizado";
     else
       commit; 
-      set _msg_id = 200;
+      set _msg_id   = 200;
+      set _msg_text = "CEP excluído com sucesso";
     end if;
   end if; 
   
   -- retorna para aplicacao
-  select _msg_id as response;
+  select _msg_id as resId, _msg_text as resMsg;
   
 end $$
 

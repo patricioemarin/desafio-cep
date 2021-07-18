@@ -6,6 +6,7 @@ require('dotenv').config({
 });
 
 var varPool = varMySQL.createPool({
+    "connectionLimit": 1000,
     "user": process.env.MYSQL_USER,
     "password": process.env.MYSQL_PASSWORD,
     "database": process.env.MYSQL_DATABASE,
@@ -14,9 +15,8 @@ var varPool = varMySQL.createPool({
 });
 
 exports.execute = (query, params=[]) => {
-    console.log('TESTE AQUI!');
     return new Promise((resolve, reject) => {
-        // Quando usa o Pool, se fizer direto o ".query" não precisa do release().
+        // O Pool de conexão usando diretamente o método ".query" não necessita de ".release()".
         varPool.query(query, params, (error, result, fields) => {
             if (error) {
                 reject(error);

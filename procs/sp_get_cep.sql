@@ -18,6 +18,7 @@ begin
   declare _cepLogradouro   varchar(72);
   declare _cepComplemento  varchar(100);
   declare _msg_id          int;
+  declare _msg_text        varchar(80);
 
   declare continue handler for not found set _encontrou = 1; 
     
@@ -33,7 +34,8 @@ begin
   set _intCont = 1;
   
   -- Inicializa a variável de controle de erro para CEP não encontrado
-  set _msg_id = 404;
+  set _msg_id   = 404;
+  set _msg_text = "CEP não encontrado";
 
   -- Realiza as tentativas de localização do endereço pelo CEP
   cep_loop: loop
@@ -53,7 +55,8 @@ begin
        where cepId = _cepAux;
        
       -- Atualiza a mensagem em caso de sucesso
-      set _msg_id = 200;
+      set _msg_id   = 200;
+      set _msg_text = "CEP válido";
 
       -- Finaliza o looping
       leave cep_loop;
@@ -65,11 +68,12 @@ begin
   end loop cep_loop;
   
   if (_erro_tran = 1) then
-     set _msg_id = 500;
+     set _msg_id    = 500;
+     set _msg_text  = "Erro interno do banco de dados";
   end if; 
   
   -- retorna para aplicacao
-  select _msg_id as response, _cepId as cep, _cepUF as uf, _cepCidade as cidade, _cepBairro as bairro, _cepLogradouro as logradouro, _cepComplemento as complemento;
+  select _msg_id as resId, _msg_text as resMsg, _cepId as cep, _cepUF as uf, _cepCidade as cidade, _cepBairro as bairro, _cepLogradouro as logradouro, _cepComplemento as complemento;
 
 end $$
 

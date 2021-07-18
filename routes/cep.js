@@ -1,6 +1,5 @@
 const cnsExpress = require('express');
 const cnsRouter = cnsExpress.Router();
-const cnsMySQL = require('../mysql').varPool;
 const cnsLogin = require('../middlewares/login');
 const cnsCEPController = require('../controllers/cep-controller');
 
