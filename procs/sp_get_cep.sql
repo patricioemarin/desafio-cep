@@ -17,9 +17,8 @@ begin
   declare _cepBairro       varchar(80);
   declare _cepLogradouro   varchar(72);
   declare _cepComplemento  varchar(100);
-  declare _msg_id          int(10);
-  declare _msg_txt         varchar(255);
-    
+  declare _msg_id          int;
+
   declare continue handler for not found set _encontrou = 1; 
     
   declare continue handler for sqlexception set _erro_tran = 1;  
@@ -33,9 +32,12 @@ begin
   -- Inicializa a variável
   set _intCont = 1;
   
+  -- Inicializa a variável de controle de erro para CEP não encontrado
+  set _msg_id = 404;
+
   -- Realiza as tentativas de localização do endereço pelo CEP
   cep_loop: loop
-    
+
     -- Se atingiu a totalidade de zeros o CEP não será encontrado e sai do looping
     if (_cepAux = "00000000") then
       leave cep_loop;
@@ -43,11 +45,18 @@ begin
 
     -- Se não encontrou o CEP, faz 3 tentativas de substituição do dígito à direita por zero
     if exists (select cepId from tbcep where cepId = _cepAux) then
+
+      -- Carrega as informações de saída com o endereço encontrado
       select  cepId,  cepUF,  cepCidade,  cepBairro,  cepLogradouro,  cepComplemento 
         into _cepId, _cepUF, _cepCidade, _cepBairro, _cepLogradouro, _cepComplemento
         from tbcep 
        where cepId = _cepAux;
-       leave cep_loop;
+       
+      -- Atualiza a mensagem em caso de sucesso
+      set _msg_id = 200;
+
+      -- Finaliza o looping
+      leave cep_loop;
     else
       set _cepAux = rpad(mid(pv_cepId, 1, (length(pv_cepId) - _intCont)), 8, '0');
       set _intCont = (_intCont + 1);
@@ -56,17 +65,11 @@ begin
   end loop cep_loop;
   
   if (_erro_tran = 1) then
-     rollback; 
-     set _msg_id   = 500;
-	   set _msg_txt  = 'Erro interno de banco de dados';
-  else
-     commit; 
-     set _msg_id   = 200;
-     set _msg_txt  = 'Endereço encontrado';
+     set _msg_id = 500;
   end if; 
   
   -- retorna para aplicacao
-  select _msg_id, _msg_txt, _cepId, _cepUF, _cepCidade, _cepBairro, _cepLogradouro, _cepComplemento;
+  select _msg_id as response, _cepId as cep, _cepUF as uf, _cepCidade as cidade, _cepBairro as bairro, _cepLogradouro as logradouro, _cepComplemento as complemento;
 
 end $$
 

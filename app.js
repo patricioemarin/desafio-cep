@@ -2,13 +2,9 @@ const cnsExpress = require('express');
 const cnsApp = cnsExpress();
 const cnsMorgan = require('morgan');
 const cnsRotasCEP = require('./routes/cep');
+const cnsRotasUsuario = require('./routes/usuario');
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
-
-// Inclusão e tratamento de variáveis de ambiente utilizadas
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
-});
 
 // Acesso à documentação Swagger
 cnsApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -24,6 +20,9 @@ cnsApp.use(cnsExpress.urlencoded({extended: false}));
 
 // Rota de CEP (endereços)
 cnsApp.use('/cep', cnsRotasCEP);
+
+// Rota de Usuários
+cnsApp.use('/usuario', cnsRotasUsuario);
 
 // Tratamento para mensagem amigável em caso de não localização de rota
 cnsApp.use((request, response, next) => {
