@@ -61,9 +61,9 @@ begin
   
   declare _encontrou smallint;
   declare _erro_tran smallint;
-  declare _msg_id    int(10);
-  declare _msg_txt   varchar(255);
-    
+  declare _msg_id    int;
+  declare _msg_text  varchar(80);
+
   declare continue handler for not found set _encontrou = 1; 
     
   declare continue handler for sqlexception set _erro_tran = 1;  
@@ -78,22 +78,77 @@ begin
   end if;
   
   if (_erro_tran = 1) then
-     rollback; 
-     set _msg_id   = 500;
-	  set _msg_txt  = 'Erro interno de banco de dados';
+    rollback; 
+    set _msg_id     = 500;
+    set _msg_text   = "Erro interno do banco de dados";
   else
-     if (_erro_tran = 2) then
-       set _msg_id   = 404;
-       set _msg_txt  = 'Endereço não encontrado';
-     else
-       commit; 
-       set _msg_id   = 200;
-       set _msg_txt  = 'Endereço excluído com sucesso';       
-     end if;
+    if (_erro_tran = 2) then
+      set _msg_id   = 404;
+      set _msg_text = "CEP não localizado";
+    else
+      commit; 
+      set _msg_id   = 200;
+      set _msg_text = "CEP excluído com sucesso";
+    end if;
   end if; 
   
   -- retorna para aplicacao
-  select _msg_id, _msg_txt;
+  select _msg_id as resId, _msg_text as resMsg;
+  
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_delete_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_delete_usuario`(in pi_usuId int(11))
+begin
+
+  declare _encontrou smallint;
+  declare _erro_tran smallint;
+  declare _msg_id    int;
+  declare _msg_text  varchar(80);
+    
+  declare continue handler for not found set _encontrou = 1; 
+    
+  declare continue handler for sqlexception set _erro_tran = 1;  
+  
+  -- Inicia a Transação
+  start transaction; 
+  
+  if exists (select usuId from tbusuario where usuId = pi_usuId) then
+    delete from tbusuario where usuId = pi_usuId;
+  else 
+    set _erro_tran = 2;
+  end if;
+
+  if (_erro_tran = 1) then
+    rollback; 
+    set _msg_id    = 500;
+    set _msg_text  = "Erro interno do banco de dados";
+  else
+    if (_erro_tran = 2) then
+      set _msg_id    = 404;
+      set _msg_text  = "Usuário não localizado";
+    else
+      commit; 
+      set _msg_id    = 200;
+      set _msg_text  = "Usuário excluído com sucesso";
+    end if;
+  end if; 
+  
+  -- retorna para aplicacao
+  select _msg_id as resId, _msg_text as resMsg;
 
 end ;;
 DELIMITER ;
@@ -124,9 +179,9 @@ begin
   declare _cepBairro       varchar(80);
   declare _cepLogradouro   varchar(72);
   declare _cepComplemento  varchar(100);
-  declare _msg_id          int(10);
-  declare _msg_txt         varchar(255);
-    
+  declare _msg_id          int;
+  declare _msg_text        varchar(80);
+
   declare continue handler for not found set _encontrou = 1; 
     
   declare continue handler for sqlexception set _erro_tran = 1;  
@@ -140,16 +195,33 @@ begin
   -- Inicializa a variável
   set _intCont = 1;
   
-  -- Realiza 3 tentativas de localização do endereço pelo CEP
+  -- Inicializa a variável de controle de erro para CEP não encontrado
+  set _msg_id   = 404;
+  set _msg_text = "CEP não encontrado";
+
+  -- Realiza as tentativas de localização do endereço pelo CEP
   cep_loop: loop
-    
+
+    -- Se atingiu a totalidade de zeros o CEP não será encontrado e sai do looping
+    if (_cepAux = "00000000") then
+      leave cep_loop;
+    end if;
+
     -- Se não encontrou o CEP, faz 3 tentativas de substituição do dígito à direita por zero
     if exists (select cepId from tbcep where cepId = _cepAux) then
+
+      -- Carrega as informações de saída com o endereço encontrado
       select  cepId,  cepUF,  cepCidade,  cepBairro,  cepLogradouro,  cepComplemento 
         into _cepId, _cepUF, _cepCidade, _cepBairro, _cepLogradouro, _cepComplemento
         from tbcep 
        where cepId = _cepAux;
-       leave cep_loop;
+       
+      -- Atualiza a mensagem em caso de sucesso
+      set _msg_id   = 200;
+      set _msg_text = "CEP válido";
+
+      -- Finaliza o looping
+      leave cep_loop;
     else
       set _cepAux = rpad(mid(pv_cepId, 1, (length(pv_cepId) - _intCont)), 8, '0');
       set _intCont = (_intCont + 1);
@@ -158,17 +230,12 @@ begin
   end loop cep_loop;
   
   if (_erro_tran = 1) then
-     rollback; 
-     set _msg_id   = 500;
-	  set _msg_txt  = 'Erro interno de banco de dados';
-  else
-     commit; 
-     set _msg_id   = 200;
-     set _msg_txt  = 'Endereço encontrado';
+     set _msg_id    = 500;
+     set _msg_text  = "Erro interno do banco de dados";
   end if; 
   
   -- retorna para aplicacao
-  select _msg_id, _msg_txt, _cepId, _cepUF, _cepCidade, _cepBairro, _cepLogradouro, _cepComplemento;
+  select _msg_id as resId, _msg_text as resMsg, _cepId as cep, _cepUF as uf, _cepCidade as cidade, _cepBairro as bairro, _cepLogradouro as logradouro, _cepComplemento as complemento;
 
 end ;;
 DELIMITER ;
@@ -193,21 +260,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_post_cep`(in pv_cepId varchar(08
 										  in pv_cepLogradouro varchar(72),
 										  in pv_cepComplemento varchar(100))
 begin
-  
-  declare _encontrou smallint;
-  declare _erro_tran smallint;
-  declare _msg_id    int(10);
-  declare _msg_txt   varchar(255);
+   
+   declare _encontrou smallint;
+   declare _erro_tran smallint;
+   declare _msg_id    int;
+   declare _msg_text  varchar(80);
+
+   declare continue handler for not found set _encontrou = 1; 
     
-  declare continue handler for not found set _encontrou = 1; 
-    
-  declare continue handler for sqlexception set _erro_tran = 1;  
-  
-  -- Inicia a Transação
-  start transaction; 
-  
-  if exists (select cepId from tbcep where cepId = pv_cepId) then
-				   
+   declare continue handler for sqlexception set _erro_tran = 1;  
+   
+   -- Inicia a Transação
+   start transaction; 
+   
+   if exists (select cepId from tbcep where cepId = pv_cepId) then
+
       update tbcep set cepUF           = pc_cepUF, 
 							  cepCidade		   = pv_cepCidade,
 							  cepBairro       = pv_cepBairro, 
@@ -220,18 +287,73 @@ begin
 			        values (pv_cepId, pc_cepUF, pv_cepCidade, pv_cepBairro, pv_cepLogradouro, pv_cepComplemento); 
    end if;
   	
-  if (_erro_tran = 1) then
-     rollback; 
-     set _msg_id   = 500;
-	  set _msg_txt  = 'Erro interno de banco de dados';
-  else
-     commit; 
-     set _msg_id   = 200;
-     set _msg_txt  = 'Endereço salvo com sucesso';
-  end if; 
+   if (_erro_tran = 1) then
+      rollback; 
+      set _msg_id    = 500;
+      set _msg_text  = "Erro interno do banco de dados";
+   else
+      commit; 
+      set _msg_id    = 200;
+      set _msg_text  = "CEP salvo com sucesso";
+   end if; 
+   
+   -- retorna para aplicacao
+   select _msg_id as resId, _msg_text as resMsg;
+   
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_post_usuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_post_usuario`(in pi_usuId int(11), 
+										      in pv_usuNome varchar(120), 
+                                    in pv_usuEmail varchar(60),
+										      in pv_usuSenha varchar(255))
+begin
+   
+   declare _encontrou smallint;
+   declare _erro_tran smallint;
+   declare _msg_id    int;
+   declare _msg_text  varchar(80);
+
+  declare continue handler for not found set _encontrou = 1; 
+    
+  declare continue handler for sqlexception set _erro_tran = 1;  
   
-  -- retorna para aplicacao
-  select _msg_id, _msg_txt;
+  -- Inicia a Transação
+  start transaction; 
+  
+   if exists (select usuId from tbusuario where usuId = pi_usuId) then
+      update tbusuario set usuNome = pv_usuNome, usuEmail = pv_usuEmail, usuSenha = pv_usuSenha 
+       where usuId = pi_usuId;
+   else
+      insert into tbusuario (usuId, usuNome, usuEmail, usuSenha) 
+                     values (pi_usuId, pv_usuNome, pv_usuEmail, pv_usuSenha); 
+   end if;
+  	
+   if (_erro_tran = 1) then
+      rollback; 
+      set _msg_id     = 500;
+      set _msg_text   = "Erro interno do banco de dados";
+   else
+      commit; 
+      set _msg_id   = 200;
+      set _msg_text = "Usuário salvo com sucesso";
+   end if; 
+   
+   -- retorna para aplicacao
+   select _msg_id as resId, _msg_text as resMsg;
 
 end ;;
 DELIMITER ;
@@ -249,4 +371,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-16 14:55:22
+-- Dump completed on 2021-07-18 16:33:49
