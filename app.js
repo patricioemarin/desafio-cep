@@ -4,7 +4,7 @@ const cnsMorgan = require('morgan');
 const cnsRotasCEP = require('./routes/cep');
 const cnsRotasUsuario = require('./routes/usuario');
 const swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('./swagger.json');
+swaggerDocument = require('./utils/swagger.json');
 
 // Acesso à documentação Swagger
 cnsApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

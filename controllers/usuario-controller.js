@@ -1,4 +1,4 @@
-const cnsMySQL = require('../mysql');
+const cnsMySQL = require('../config/mysql');
 const cnsBCrypt = require('bcrypt');
 const cnsJWT = require('jsonwebtoken');
 
@@ -63,8 +63,8 @@ exports.loginUsuario = async (request, response, next) => {
             }); 
         }
 
-        return response.status(401).send({response: "Falha na autenticação 2"});
+        return response.status(401).send({response: "Falha na autenticação"});
     } catch (error) {
-        return response.status(500).send({error: 'Falha na autenticação 3'});
+        return response.status(500).send({error: 'Falha na autenticação'});
     }
 }

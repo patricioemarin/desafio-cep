@@ -1,6 +1,6 @@
 const cnsReqSupertest = require('supertest');
 const cnsApp = require('../../app');
-const cnsMySQL = require('../../mysql').varPool;
+const cnsMySQL = require('../../config/mysql').varPool;
 
 // Categoria de teste de CEP (Endereços)
 describe('CEP', () => {

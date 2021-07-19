@@ -1,4 +1,4 @@
-const cnsMySQL = require('../mysql');
+const cnsMySQL = require('../config/mysql');
 const cnsMetodosCEP = require('../utils/cep-metodos');
 
 exports.getCEP = async (request, response, next) => {
@@ -36,7 +36,7 @@ exports.postCEP = async (request, response, next) => {
             );
         
             // Em caso de processamento realizado com sucesso, define o status com o retorno da procedure:
-            // 200 = OK 500 = Internal Server Error
+            // 200 = OK | 500 = Internal Server Error
             return response.status(cnsResult[0][0].resId).send({response: cnsResult[0][0]});
         }
     } catch (error) {

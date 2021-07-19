@@ -1,0 +1,325 @@
+{
+    "swagger": "2.0",
+        "info": 
+        {
+            "title": "API-Rest-CEP",
+            "description": "Projeto Desafio Técnico LuizaLabs: API Rest em Node JS - CEP",
+            "version": "1.0"
+        },
+        "host": "localhost:3000",
+        "basepath": "/",
+        "schemes": "['http', 'https']",
+        "consumes": "['application/json']",
+        "produces": "['application/json']",
+        "tags": [
+            {
+                "name": "Usuários",
+                "description": "Endpoints de Usuários"
+            },
+            {
+                "name": "CEP",
+                "description": "Endpoints de CEP (Endereços)"
+            }
+        ],
+        "paths": 
+        {
+            "/usuario": 
+            {
+                "post": 
+                {
+                    "tags": ["Usuários"],
+                    "sumary": "",
+                    "description": "Incluir/alterar usuário",
+                    "parameters": 
+                    [
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "id": 
+                                    {
+                                        "type": "number"
+                                    },
+                                    "nome": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "email": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "senha": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Usuário salvo com sucesso"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                },
+                "delete": 
+                {
+                    "tags": ["Usuários"],
+                    "sumary": "",
+                    "description": "Excluir usuário",
+                    "parameters": 
+                    [
+                        {
+                            "name": "Authorization",
+                            "in": "header",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "id": 
+                                    {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Usuário excluído com sucesso"
+                        },
+                        "404": 
+                        {
+                            "description": "Usuário não localizado"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            },
+            "/usuario/login": 
+            {
+                "post": 
+                {
+                    "tags": ["Usuários"],
+                    "sumary": "",
+                    "description": "Autenticação de usuário",
+                    "parameters": 
+                    [
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "email": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "senha": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "Autenticado com sucesso"
+                        },
+                        "401": 
+                        {
+                            "description": "Falha na autenticação"
+                        },
+                        "500": 
+                        {
+                            "description": "Falha na autenticação"
+                        }
+                    }
+                }
+            },
+            "/cep": 
+            {
+                "post": 
+                {
+                    "tags": ["CEP"],
+                    "sumary": "",
+                    "description": "Incluir/alterar endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                            "name": "Authorization",
+                            "in": "header",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "cep": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "uf": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "cidade": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "bairro": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "logradouro": 
+                                    {
+                                        "type": "string"
+                                    },
+                                    "complemento": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "CEP salvo com sucesso"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                },
+                "delete": 
+                {
+                    "tags": ["CEP"],
+                    "sumary": "",
+                    "description": "Excluir endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                            "name": "Authorization",
+                            "in": "header",
+                            "type": "string",
+                            "required": true
+                        },
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "required": true,
+                            "schema": 
+                            {
+                                "type": "object",
+                                "properties": 
+                                {
+                                    "cep": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "CEP excluído com sucesso"
+                        },
+                        "404": 
+                        {
+                            "description": "CEP não localizado"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            },
+            "/cep/{cep}": 
+            {
+                "get": 
+                {
+                    "tags": ["CEP"],
+                    "sumary": "",
+                    "description": "Consultar endereço (CEP)",
+                    "parameters": 
+                    [
+                        {
+                        "in": "path",
+                        "name": "cep",
+                        "required": true,
+                        "schema": 
+                        {
+                            "type": "object",
+                                "properties": 
+                                {
+                                    "cep": 
+                                    {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses": 
+                    {
+                        "200": 
+                        {
+                            "description": "CEP Válido"
+                        },
+                        "404": 
+                        {
+                            "description": "CEP não encontrado"
+                        },
+                        "500": 
+                        {
+                            "description": "Erro interno do banco de dados"
+                        }
+                    }
+                }
+            }
+        }
+    }
