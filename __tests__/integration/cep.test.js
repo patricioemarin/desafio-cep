@@ -2,7 +2,6 @@ const cnsReqSupertest = require('supertest');
 const cnsApp = require('../../app');
 const cnsMySQL = require('../../config/mysql');
 
-// Categoria de teste dos usuários da API
 describe('CEP', () => {
 
     beforeAll(async () => {
@@ -15,6 +14,12 @@ describe('CEP', () => {
         cnsMySQL.close();
         // Reseta o Timeout
         jest.setTimeout(5 * 1000);
+    });
+
+    it('o banco de dados está conectado', async () => {
+        const cnsResSupertest = await cnsReqSupertest(cnsApp).get('/health');
+
+        expect(cnsResSupertest.status).toBe(200);
     });
 
     it('o usuário é cadastrado', async () => {
