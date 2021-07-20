@@ -10,6 +10,7 @@
 
 ### Rotas
 
+- [GET] http://localhost:3000/health <br>Verificação da saúde da aplicação (status da conexão com dba)
 - [POST] http://localhost:3000/usuario <br>Cadastro de usuários para acesso à rotas protegidas por autenticação
 - [POST] http://localhost:3000/usuario/login <br>Autenticação de usuário (Acesso ao Token)
 - [DELETE] http://localhost:3000/usuario/ <br>Exclusão de usuário (usar Token para ser autorizado)

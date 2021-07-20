@@ -1,6 +1,7 @@
 const cnsExpress = require('express');
 const cnsApp = cnsExpress();
 const cnsMorgan = require('morgan');
+const cnsRotasHealth = require('./routes/health-router');
 const cnsRotasCEP = require('./routes/cep-router');
 const cnsRotasUsuario = require('./routes/usuario-router');
 const swaggerUi = require('swagger-ui-express'),
@@ -17,6 +18,9 @@ cnsApp.use(cnsExpress.json());
 
 // Delimita o formato de entrada de dados (simples)
 cnsApp.use(cnsExpress.urlencoded({extended: false})); 
+
+// Rota para verificar se conecta com o banco de dados
+cnsApp.use('/health', cnsRotasHealth);
 
 // Rota de CEP (endereços)
 cnsApp.use('/cep', cnsRotasCEP);
