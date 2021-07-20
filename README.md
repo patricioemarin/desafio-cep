@@ -29,11 +29,17 @@
     - Se CEP válido mas com endereço inexistente: substituição dos dígitos da direita para esquerda por zero (1 por vez) para novas tentativas, até o endereço ser localizado ou se esgotar os 8 dígitos (00000000).        
     - Se CEP inválido: "CEP inválido".
 
-Obs: Sugestão de CEP para o cenário de troca de dígitos: Usar 14412999, será encontrado 14412000
+Obs: 
+
+    - Sugestão de CEP para o cenário de troca de dígitos: Usar 14412999, será encontrado 14412000
+    - Para autenticação de usuário (acesso ao token), usar:
+        - email: email@provedor.com
+        - senha: senha1234
 
 ### Escolhas técnicas
 
 Para este projeto foi utilizado: (A) Node JS (por ser a ferramenta sugerida e que eu já tive algum contato anteriormente); (B) Banco de dados MySQL (foi utilizado uma base reduzida apenas com os CEP's do município de Franca-SP, somente para demonstração do projeto, para não ficar muito grande (em Mb) o dump da base); (C) Comunicação entre a aplicação e o banco de dados via Stored Procedures (para demonstrar o uso deste formato); (D) Documentação em Swagger; (E) Testes em Jest (obs: foram utilizadas 2 bases de dados distintas para separar a base de testes, sendo que os dump's foram realizados com o MySQL Workbench). 
+A senha do usuário é gravada em hash e token gerado através de JWT
 
 ### Requisitos/Dependências
 
