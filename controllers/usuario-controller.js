@@ -12,7 +12,7 @@ exports.postUsuario = async (request, response, next) => {
             request.body.email,
             cnsHash],
         );
-    
+        
         // Em caso de processamento realizado com sucesso, define o status com o retorno da procedure:
         // 200 = OK | 500 = Internal Server Error
         return response.status(cnsResult[0][0].resId).send({response: cnsResult[0][0]});
@@ -57,6 +57,7 @@ exports.loginUsuario = async (request, response, next) => {
             {
                 expiresIn: '1h'
             });
+            
             return response.status(200).send({
                 response: "Autenticado com sucesso",
                 token: cnsToken

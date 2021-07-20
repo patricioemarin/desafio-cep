@@ -1,11 +1,12 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/patricioemarin/desafio-cep)
 ![GitHub language count](https://img.shields.io/github/languages/count/patricioemarin/desafio-cep)
 
-# Projeto Desafio Técnico LuizaLabs: API Rest em Node JS - CEP
+:sweat_smile: :computer: :factory: 
+# Desafio Técnico LuizaLabs: API Rest em Node JS - CEP
 
 ## Descrição do Projeto
 
-##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. 
+##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. A validação do CEP foi feita através de um método simples com expressão regular apenas para fins didáticos, pensando em um projeto em produção poderia ser interessante uma validação através de uma possível API dos correios (em caso de disponibilidade do serviço).
 
 ### Rotas
 

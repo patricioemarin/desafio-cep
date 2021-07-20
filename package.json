@@ -4,7 +4,7 @@
   "description": "Projeto Desafio Técnico CEP: API em Node JS",
   "main": "server.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest --watch --runInBand --detectOpenHandles",
     "start": "nodemon server.js"
   },
   "repository": {

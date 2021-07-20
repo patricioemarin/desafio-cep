@@ -27,4 +27,8 @@ exports.execute = (query, params=[]) => {
     });
 };
 
+exports.close = () => {
+    varPool.end();
+};
+
 exports.varPool = varPool;

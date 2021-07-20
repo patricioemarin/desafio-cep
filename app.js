@@ -1,8 +1,8 @@
 const cnsExpress = require('express');
 const cnsApp = cnsExpress();
 const cnsMorgan = require('morgan');
-const cnsRotasCEP = require('./routes/cep');
-const cnsRotasUsuario = require('./routes/usuario');
+const cnsRotasCEP = require('./routes/cep-router');
+const cnsRotasUsuario = require('./routes/usuario-router');
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./utils/swagger.json');
 
