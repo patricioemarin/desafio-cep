@@ -44,7 +44,6 @@ Para este projeto foi utilizado: (A) Node JS (por ser a ferramenta sugerida e qu
 - jsonwebtoken
 - morgan
 - mysql
-- sequelize
 - swagger-ui-express
 
 Desenvolvimento
@@ -59,7 +58,14 @@ npm install
 
 ### Conexão MySQL
 
-Ajustar os parâmetros de conexão para as variáveis de ambiente nos arquivos ".env" e ".env.test"
+Ajustar os parâmetros de conexão para as variáveis de ambiente nos arquivos ".env" e ".env.test":
+
+- MYSQL_USER
+- MYSQL_PASSWORD
+- MYSQL_DATABASE
+- MYSQL_HOST
+- MYSQL_PORT
+- JWT_KEY
 
 ### Para rodar a aplicação
 
