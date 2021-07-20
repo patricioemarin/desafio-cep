@@ -6,7 +6,7 @@
 
 ## Descrição do Projeto
 
-##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. A validação do CEP foi feita através de um método simples com expressão regular apenas para fins didáticos, pensando em um projeto em produção poderia ser interessante uma validação através de uma possível API dos correios (em caso de disponibilidade do serviço).
+##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. A validação do CEP foi feita através de um método simples com expressão regular apenas para fins didáticos, pensando em um projeto em produção poderia ser interessante uma validação através de uma possível API dos correios (em caso de disponibilidade do serviço). 
 
 ### Rotas
 
@@ -31,7 +31,7 @@
 
 ### Escolhas técnicas
 
-Para este projeto foi utilizado: (A) Node JS (por ser a ferramenta sugerida e que eu já tive algum contato anteriormente); (B) Banco de dados MySQL (foi utilizado uma base reduzida apenas com os CEP's do município de Franca-SP, somente para demonstração do projeto, para não ficar muito grande (em Mb) o dump da base); (C) Comunicação entre a aplicação e o banco de dados via Stored Procedures (para demonstrar o uso deste formato); (D) Documentação em Swagger; (E) Testes em Jest.
+Para este projeto foi utilizado: (A) Node JS (por ser a ferramenta sugerida e que eu já tive algum contato anteriormente); (B) Banco de dados MySQL (foi utilizado uma base reduzida apenas com os CEP's do município de Franca-SP, somente para demonstração do projeto, para não ficar muito grande (em Mb) o dump da base); (C) Comunicação entre a aplicação e o banco de dados via Stored Procedures (para demonstrar o uso deste formato); (D) Documentação em Swagger; (E) Testes em Jest (obs: foram utilizadas 2 bases de dados distintas para separar a base de testes, sendo que os dump's foram realizados com o MySQL Workbench). 
 
 ### Requisitos/Dependências
 
@@ -68,10 +68,10 @@ Ajustar os parâmetros de conexão para as variáveis de ambiente nos arquivos "
 - MYSQL_PORT
 - JWT_KEY
 
-### Para rodar a aplicação
+### Comando para rodar a aplicação
 
 npm start
 
-### Testes
+### Comando para rodar os Testes
 
 npm test
