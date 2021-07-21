@@ -65,7 +65,7 @@ Desenvolvimento
 
 npm install
 
-### Conexão MySQL
+### Variáveis de ambiente (MySQL e Token)
 
 Ajustar os parâmetros de conexão para as variáveis de ambiente nos arquivos ".env" e ".env.test":
 
@@ -74,6 +74,7 @@ Ajustar os parâmetros de conexão para as variáveis de ambiente nos arquivos "
 - MYSQL_DATABASE
 - MYSQL_HOST
 - MYSQL_PORT
+- JWT_KEY
 
 ### Comando para rodar a aplicação
 
