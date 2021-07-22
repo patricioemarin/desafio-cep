@@ -6,7 +6,7 @@
 
 ## Descrição do Projeto
 
-##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. A validação do CEP foi feita através de um método simples com expressão regular apenas para fins didáticos, pensando em um projeto em produção poderia ser interessante uma validação através de uma possível API dos correios (em caso de disponibilidade do serviço). 
+##### A API tem como objetivo principal a consulta de endereço por CEP. A API disponibiliza também um CRUD de usuários para autenticação e proteção de algumas rotas. As rotas protegidas por autenticação são: (A) Exclusão de usuário; (B) Cadastro de CEP; (C) Exclusão de CEP. As rotas de cadastro de usuário e consulta de CEP ficaram propositalmente livres de autenticação. A validação do CEP foi feita através de um método simples com expressão regular apenas para fins didáticos, pensando em um projeto em produção poderia ser interessante uma validação através de uma possível API dos correios (em caso de disponibilidade do serviço). Alguns pontos foram desenvolvidos apenas como fins didáticos, não contendo todas as validações, por exemplo: Não é verificado duplicidade de e-mail no cadastro de usuário.
 
 ### Rotas
 
@@ -60,6 +60,8 @@ Desenvolvimento
 - jest
 - nodemon
 - supertest
+
+Banco de dados MySQL Server 5.7.31
 
 ### Instalação
 
