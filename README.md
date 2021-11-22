@@ -86,11 +86,6 @@ npm start
 
 npm test
 
-### Considerações finais
-
-P.S. :pushpin: Alguns dos itens solicitados para o desenvolvimento do projeto demandaram um tempo razoável de pesquisa por serem recursos que eu não estava habituado a utilizar em minhas experiências profissionais anteriores (como Swagger e principalmente os recursos para Testes). 
-Em relação aos itens "opcionais" como as métricas e o log estruturado não consegui finalizar dentro dos 7 dias de desenvolvimento, demandariam um pouco mais de pesquisa e programação.
-
 :taurus: :pray: :punch:
 
 Muito obrigado pela oportunidade de fazer o desafio técnico, foi desafiador e ao mesmo tempo gratificante!
